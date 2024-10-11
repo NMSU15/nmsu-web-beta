@@ -74,7 +74,7 @@ export default function Navbar() {
                             <div>
                                 <button className={styles.profile} onClick={toggleProfile}>
                                     <Image
-                                        src={session ? session.user.image: ''}
+                                        src={session ? session.user.image : '/user-empty.svg'}
                                         width={96}
                                         height={96}
                                         alt='Profile picture'
