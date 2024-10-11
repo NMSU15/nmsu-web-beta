@@ -1,0 +1,93 @@
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+html,
+body {
+  overflow-x: hidden;
+  background-color: #000000;
+  color: #fff;
+}
+
+html{
+  max-width: 100vw;
+  min-height: 100svh;
+}
+
+body {
+  width: 100%;
+  min-height: 100svh;
+  padding: 1rem;
+  /* font-family: Arial, Helvetica, sans-serif; */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+main{
+  padding-top: 5rem;
+  margin: auto;
+  /* max-width: 50rem; */
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  border: none;
+  background-color: transparent;
+}
+
+.center{
+  height: 50vh;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-self: center;
+}
+
+.centerq{
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.logo{
+  width: 100px;
+  height: 100px;
+}
+
+.text3{
+  max-width: 50rem;
+  margin-top: 2rem;
+  font-size: 1.2rem;
+  font-weight: 600;
+  text-align: center;
+}
+
+.textp{
+  max-width: 50rem;
+  margin-top: 1rem;
+  font-size: 1rem;
+  font-weight: 500;
+  text-align: center;
+}
+
+.social{
+  text-align: start;
+}
+
+.swiper-slide {
+  width: 100%;    /* Ensure each slide takes full width */
+  flex-shrink: 0; /* Prevent shrinking of slides */
+}
+
+.swiper {
+  width: 100%;  /* Ensure the Swiper container is full width */
+  height: 100%; /* Set height to 100% to avoid incorrect wrapping */
+}
