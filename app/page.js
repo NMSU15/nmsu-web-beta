@@ -10,23 +10,6 @@ import 'swiper/css/pagination';
 import 'swiper/css/navigation';
 import { Pagination, Navigation } from 'swiper/modules';
 
-function Buttons({ isFirstSlide, isLastSlide, handlePrevSlide, handleNextSlide, disabled }) {
-  return (
-    <div className={styles.navigationButtons}>
-      {!isFirstSlide && (
-        <button type="button" onClick={handlePrevSlide} className={styles.navButton}>
-          Өмнөх
-        </button>
-      )}
-      {!isLastSlide && (
-        <button type="button" onClick={handleNextSlide} className={styles.navButton} disabled={!disabled}>
-          Дараах
-        </button>
-      )}
-    </div>
-  )
-}
-
 export default function Page() {
   const router = useRouter();
   const { data: session } = useSession();
@@ -38,28 +21,48 @@ export default function Page() {
     email: '',
     name: '',
     group: '',
-    davuutal: '',
-    sultal: '',
-    volunteerExperience: [],
-    reasonForJoining: '',
-    selfDescription: ''
+    ShineJildOroh: '',
+    Ticket: '',
+    Idea: ''
   });
+
+  function Buttons({ isFirstSlide, isLastSlide, handlePrevSlide, handleNextSlide, disabled }) {
+    return (
+      <div className={styles.navigationButtons}>
+        {!isFirstSlide && (
+          <button type="button" onClick={handlePrevSlide} className={styles.navButtonPrev}>
+            Өмнөх
+          </button>
+        )}
+        {!isLastSlide ?(
+          <button type="button" onClick={handleNextSlide} className={styles.navButton} disabled={!disabled}>
+            Дараах
+          </button>
+        ):(
+          <button type="submit" className={styles.navButton} disabled={sending}>
+            {sending ? 'Илгээж байна...' : 'Илгээх'}
+          </button>
+          )
+        }
+      </div>
+    )
+  }
 
 const handleNextSlide = () => {
   if (swiperRef.current && swiperRef.current.swiper) {
-    swiperRef.current.swiper.slideNext();  // Set speed to 0 for instant transitions
-    swiperRef.current.swiper.update();      // Force recalculation of dimensions
-    swiperRef.current.swiper.updateSlides(); // Ensure slides are updated
-    swiperRef.current.swiper.updateSize();  // Force Swiper to recalculate size
+    swiperRef.current.swiper.slideNext();
+    swiperRef.current.swiper.update();
+    swiperRef.current.swiper.updateSlides();
+    swiperRef.current.swiper.updateSize();
   }
 };
 
 const handlePrevSlide = () => {
   if (swiperRef.current && swiperRef.current.swiper) {
-    swiperRef.current.swiper.slidePrev();  // Set speed to 0 for instant transitions
-    swiperRef.current.swiper.update();      // Force recalculation of dimensions
-    swiperRef.current.swiper.updateSlides(); // Ensure slides are updated
-    swiperRef.current.swiper.updateSize();  // Force Swiper to recalculate size
+    swiperRef.current.swiper.slidePrev();
+    swiperRef.current.swiper.update();
+    swiperRef.current.swiper.updateSlides();
+    swiperRef.current.swiper.updateSize();
   }
 };
 
@@ -68,7 +71,6 @@ const handlePrevSlide = () => {
     setIsLastSlide(swiper.isEnd);
   };
 
-  // Populate email and name once session is loaded
   useEffect(() => {
     if (session) {
       setFormData(prevData => ({
@@ -78,24 +80,6 @@ const handlePrevSlide = () => {
       }));
     }
   }, [session]);
-
-  const handleCheckboxChange = (e) => {
-    const { value, checked } = e.target;
-    setFormData(prevState => {
-      const selectedOptions = prevState.volunteerExperience;
-      if (checked) {
-        return {
-          ...prevState,
-          volunteerExperience: [...selectedOptions, value]
-        };
-      } else {
-        return {
-          ...prevState,
-          volunteerExperience: selectedOptions.filter(option => option !== value)
-        };
-      }
-    });
-  };
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -110,15 +94,12 @@ const handlePrevSlide = () => {
     setSending(true);
     let failed = true;
 
-    const volunteerExperienceString = formData.volunteerExperience.join(', ');
-
     const extendedFormData = {
       ...formData,
       _next: "https://student.nmit.edu.mn/thanks",
-      _subject: "Elselt!",
+      _subject: "Shine Jil!",
       _captcha: "false",
-      _template: "table",
-      volunteerExperience: volunteerExperienceString,
+      _template: "table"
     };
 
     // try {
@@ -141,7 +122,8 @@ const handlePrevSlide = () => {
     // }
 
     try {
-      await fetch('https://formsubmit.co/87210a15849cb9819b7b5c5f21f75e0e', {
+      // await fetch('https://formsubmit.co/87210a15849cb9819b7b5c5f21f75e0e', {
+        await fetch('https://formsubmit.co/student_union@nmit.edu.mn', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded',
@@ -156,7 +138,6 @@ const handlePrevSlide = () => {
     if (!failed) {
       router.push('/thanks');
     } else {
-      alert("not submitted!");
       setSending(false);
     }
   };
@@ -165,36 +146,33 @@ const handlePrevSlide = () => {
     const handleKeyDown = (e) => {
       if (e.key === 'Enter') {
         e.preventDefault();
-        // Check if the current slide's input is valid before moving to the next slide
+  
         if (swiperRef.current && swiperRef.current.swiper) {
           const currentSlide = swiperRef.current.swiper.activeIndex;
-
+  
           switch (currentSlide) {
             case 0:
-              if (formData.email && (formData.email.includes("@nmit.edu.mn") || formData.email.includes("@gmail.com") || formData.email.includes("@yahoo.com") || formData.email.includes("@hotmail.com") || formData.email.includes("@outlook.com"))) {
+              if (formData.name.trim() !== '') {
                 handleNextSlide();
               }
               break;
             case 1:
-              if (formData.name !== '') {
+              if (formData.group.trim() !== '') {
                 handleNextSlide();
               }
               break;
             case 2:
-              if (formData.group !== '') {
+              if (formData.ShineJildOroh.trim() !== '') {
                 handleNextSlide();
               }
               break;
             case 3:
-              handleNextSlide(); // For checkboxes, allow moving ahead without validation
-              break;
-            case 4:
-              if (formData.reasonForJoining !== '') {
+              if (formData.Ticket.trim() !== '') {
                 handleNextSlide();
               }
               break;
-            case 5:
-              if (formData.selfDescription !== '') {
+            case 4:
+              if (formData.Idea.trim() !== '') {
                 handleNextSlide();
               }
               break;
@@ -204,13 +182,14 @@ const handlePrevSlide = () => {
         }
       }
     };
-
+  
     window.addEventListener('keydown', handleKeyDown);
-
+  
     return () => {
       window.removeEventListener('keydown', handleKeyDown);
     };
   }, [formData]);
+  
 
   return (
     <main className={styles.main}>
@@ -228,31 +207,6 @@ const handlePrevSlide = () => {
           autoHeight={false}
           modules={[Pagination, Navigation]}
         >
-        <SwiperSlide className={styles.swiperSlide}>
-        <div className={styles.dis}>
-          <div 
-            className={styles.inputField}
-          >
-            <label>Имэйл хаяг:</label>
-            <input
-              type="email"
-              name="email"
-              value={formData.email}
-              onChange={handleInputChange}
-              required
-              readOnly={!!session}
-            />
-            <Buttons 
-              isFirstSlide={isFirstSlide} 
-              isLastSlide={isLastSlide} 
-              handlePrevSlide={handlePrevSlide} 
-              handleNextSlide={handleNextSlide}
-              disabled={formData.email.includes("@nmit.edu.mn") || formData.email.includes("@gmail.com") || formData.email.includes("@yahoo.com") || formData.email.includes("@hotmail.com") || formData.email.includes("@outlook.com")}
-            />
-          </div>
-          <div className={styles.background} style={{backgroundImage: `url("/elselt/1.jpg")`}}></div>
-        </div>
-        </SwiperSlide>
         <SwiperSlide className={styles.swiperSlide}>
         <div className={styles.dis}>
           <div className={styles.inputField}>
@@ -273,7 +227,7 @@ const handlePrevSlide = () => {
               disabled={formData.name.trim() != ""}
             />
           </div>
-          <div className={styles.background} style={{backgroundImage: `url("/elselt/1.jpg")`}}></div>
+          {/* <div className={styles.background} style={{backgroundImage: `url("/elselt/1.jpg")`}}></div> */}
         </div>
         </SwiperSlide>
         <SwiperSlide className={styles.swiperSlide}>
@@ -295,49 +249,67 @@ const handlePrevSlide = () => {
               disabled={formData.group.trim() != ""}
             />
           </div>
-          <div className={styles.background} style={{backgroundImage: `url("/elselt/1.jpg")`}}></div>
+          {/* <div className={styles.background} style={{backgroundImage: `url("/elselt/1.jpg")`}}></div> */}
         </div>
         </SwiperSlide>
         <SwiperSlide className={styles.swiperSlide}>
         <div className={styles.dis}>
-        <div className={styles.background} style={{backgroundImage: `url("/elselt/2.jpg")`}}></div>
+        {/* <div className={styles.background} style={{backgroundImage: `url("/elselt/2.jpg")`}}></div> */}
           <div className={styles.inputField}>
-            <label>Өмнө нь сайн дурын ажил, СӨУЗ, оюутны холбоонд байсан эсэх:</label>
+            <label>Энэ жилийн шинэ жилд орох уу?:</label>
             <div className={styles.checkboxGroup}>
-              <label className={styles.label}>
-                Сайн дурын ажил хийж байсан
+              <div className={styles.label}>
                 <input
-                  type="checkbox"
-                  value="Сайн дурын ажил хийж байсан"
-                  onChange={handleCheckboxChange}
-                  checked={formData.volunteerExperience.includes("Сайн дурын ажил хийж байсан")}
+                  name="ShineJildOroh"
+                  id="c1"
+                  type="radio"
+                  value="Шинэ жилд орно"
+                  onChange={handleInputChange}
+                  checked={formData.ShineJildOroh === "Шинэ жилд орно"}
+                  required
+                  hidden
                 />
-              </label>
-              <label className={styles.label}>
-                Сурагчдын өөрөө удирдах зөвлөлд байсан
+                <label htmlFor="c1" className={styles.label}>
+                  Орно
+                </label>
+              </div>
+              <div className={styles.label}>
                 <input
-                  type="checkbox"
-                  value="Сурагчдын өөрөө удирдах зөвлөлд байсан"
-                  onChange={handleCheckboxChange}
-                  checked={formData.volunteerExperience.includes("Сурагчдын өөрөө удирдах зөвлөлд байсан")}
+                  name="ShineJildOroh"
+                  id="c2"
+                  type="radio"
+                  value="Шинэ жилд орохгүй"
+                  onChange={handleInputChange}
+                  checked={formData.ShineJildOroh === "Шинэ жилд орохгүй"}
+                  required
+                  hidden
                 />
-              </label>
-              <label className={styles.label}>
-                Оюутны холбоонд байсан
+                <label htmlFor="c2" className={styles.label}>
+                  Орохгүй
+                </label>
+              </div>
+              <div className={styles.label}>
                 <input
-                  type="checkbox"
-                  value="Оюутны холбоонд байсан"
-                  onChange={handleCheckboxChange}
-                  checked={formData.volunteerExperience.includes("Оюутны холбоонд байсан")}
+                  name="ShineJildOroh"
+                  id="c3"
+                  type="radio"
+                  value="Шийдээгүй байгаа"
+                  onChange={handleInputChange}
+                  checked={formData.ShineJildOroh === "Шийдээгүй байгаа"}
+                  required
+                  hidden
                 />
-              </label>
+                <label htmlFor="c3" className={styles.label}>
+                Шийдээгүй байгаа
+                </label>
+              </div>
             </div>
             <Buttons 
                 isFirstSlide={isFirstSlide} 
                 isLastSlide={isLastSlide} 
                 handlePrevSlide={handlePrevSlide} 
                 handleNextSlide={handleNextSlide}
-                disabled={true}
+                disabled={formData.ShineJildOroh.trim() != ''}
               />
           </div>
         </div>
@@ -345,10 +317,11 @@ const handlePrevSlide = () => {
         <SwiperSlide className={styles.swiperSlide}>
         <div className={styles.dis} style={{gridTemplateColumns: "1fr"}}>
           <div className={styles.inputField}>
-            <label>Чи бусдаас юугаараа илүү байж чадах вэ? Ямар чадвар давуу талтай вэ?:</label>
-            <textarea
-              name="davuutal"
-              value={formData.davuutal}
+            <label>Шинэ жилийн ticket-ний үнэ 90k байвал авах уу? авахгүй бол үнийн хувьд хэд байвал авах вэ?:</label>
+            <input
+              name="Ticket"
+              type="text"
+              value={formData.Ticket}
               onChange={handleInputChange}
               required
             />
@@ -357,7 +330,7 @@ const handlePrevSlide = () => {
                 isLastSlide={isLastSlide} 
                 handlePrevSlide={handlePrevSlide} 
                 handleNextSlide={handleNextSlide}
-                disabled={formData.davuutal.trim() != ""}
+                disabled={formData.Ticket.trim() != ""}
               />
           </div>
         </div>
@@ -365,62 +338,19 @@ const handlePrevSlide = () => {
         <SwiperSlide className={styles.swiperSlide}>
         <div className={styles.dis} style={{gridTemplateColumns: "1fr"}}>
           <div className={styles.inputField}>
-            <label>Өөрийнхөө сул тал болон сайжруулахыг хүсдэг зүйлс:</label>
+            <label>Шинэ жилээр хийхийг хүссэн зүйл болон хүсэлт байна уу?:</label>
             <textarea
-              name="sultal"
-              value={formData.sultal}
+              name="Idea"
+              value={formData.Idea}
               onChange={handleInputChange}
-              required
-            />
-            <Buttons 
-                isFirstSlide={isFirstSlide} 
-                isLastSlide={isLastSlide} 
-                handlePrevSlide={handlePrevSlide} 
-                handleNextSlide={handleNextSlide}
-                disabled={formData.sultal.trim() != ""}
-              />
-          </div>
-        </div>
-        </SwiperSlide>
-        <SwiperSlide className={styles.swiperSlide}>
-        <div className={styles.dis} style={{gridTemplateColumns: "1fr"}}>
-          <div className={styles.inputField}>
-            <label>Оюутны холбоонд орох болсон шалтгаан:</label>
-            <textarea
-              name="reasonForJoining"
-              value={formData.reasonForJoining}
-              onChange={handleInputChange}
-              required
             />
             <Buttons 
               isFirstSlide={isFirstSlide} 
               isLastSlide={isLastSlide} 
               handlePrevSlide={handlePrevSlide} 
               handleNextSlide={handleNextSlide}
-              disabled={formData.reasonForJoining.trim() != ""}
+              disabled={formData.Idea.trim() != ""}
             />
-          </div>
-        </div>
-        </SwiperSlide>
-        <SwiperSlide className={styles.swiperSlide}>
-        <div className={styles.dis} style={{gridTemplateColumns: "1fr"}}>
-          <div className={styles.inputField}>
-            <label>Өөрийгөө нэг өгүүлбэрээр илэрхийл гэвэл:</label>
-            <textarea
-              name="selfDescription"
-              value={formData.selfDescription}
-              onChange={handleInputChange}
-              required
-            />
-            <Buttons 
-              isFirstSlide={isFirstSlide} 
-              isLastSlide={isLastSlide} 
-              handlePrevSlide={handlePrevSlide} 
-              handleNextSlide={handleNextSlide}
-            />
-            <button type="submit" className={styles.submit} disabled={sending}>
-              {sending ? 'Илгээж байна...' : 'Илгээх'}
-            </button>
           </div>
         </div>
         </SwiperSlide>

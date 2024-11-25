@@ -38,7 +38,7 @@ export const metadata = {
     siteName: 'New Mongol Student Union',
     images: [
       {
-        url: 'https://student.nmit.edu.mn/opengraph-image.png',
+        url: 'https://student.nmit.edu.mn/opengraph-image.jpg',
         width: 1200,
         height: 630,
         alt: 'background',

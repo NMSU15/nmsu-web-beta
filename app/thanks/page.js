@@ -13,12 +13,12 @@ export default function Page() {
                 alt="Logo"
                 className="logo"
             />
-          <h3 className="text3">Таны элсэх хүсэлтийг бид хүлээн авлаа баярлалаа!</h3>
+          <h3 className="text3">Таны хүсэлтийг бид хүлээн авлаа баярлалаа!</h3>
           <p className="textp">
-          Бид хүсэлтийг тань хүлээн авсны дараа эргүүлэн имэйлээр холбогдох тул та имэйлээ шалган хүлээн авсаанаа мэдэгдэн бидэнд буцаан хариу бичээрэй. Мөн асуух зүйл байвал бидний social хаягуудаар холбогдоорой.
+            Мөн асуух зүйл байвал бидний social хаягуудаар холбогдоорой.
           </p>
           <p className="textp social">
-            <Link href="mailto: student_union@nmit.edu.mn">email: student_union@nmit.edu.mn</Link>
+            <Link href="mailto:student_union@nmit.edu.mn">email: student_union@nmit.edu.mn</Link>
             <br/>
             <Link href="https://www.facebook.com/nmit.studentunion/">fb: Nmit StudentUnion</Link>
             <br/>

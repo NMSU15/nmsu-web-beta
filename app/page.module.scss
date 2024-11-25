@@ -15,7 +15,7 @@
             .navigationButtons{
                 display: flex;
                 gap: 1rem;
-                .navButton{
+                .navButton, .navButtonPrev{
                     margin-top: 1rem;
                     font-size: 1rem;
                     padding: 1rem 1.5rem;
@@ -29,28 +29,41 @@
                         cursor: not-allowed;
                     }
                 }
+                .navButtonPrev{
+                    background-color: #1f1f1f;
+                    padding: 12px;
+                    border-radius: 12px;
+                    border: 1px solid rgba(255,255,255, 0.1);
+                    color: #fff;
+                    font-size: 1rem;
+                    text-align: center;
+                    cursor: pointer;
+                }
             }
         }
     }
     .dis{
-        display: grid;
-        grid-template-columns: 1fr 1fr;
+        // display: grid;
+        // grid-template-columns: 1fr 1fr;
         border: 1px solid rgba(255,255,255, 0.1);
         background-color: #0f0f0f;
         border-radius: 8px;
         min-height: calc(100vh - 7rem);
         overflow: hidden;
-        place-items: center;
-        @media (max-width: 640px) {
-            grid-template-columns: 1fr;
-            grid-template-rows: auto;
-            .background{
-                order: 1;
-            }
-            .inputField{
-                order: 2;
-            }
-        }
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        // place-items: center;
+        // @media (max-width: 640px) {
+        //     grid-template-columns: 1fr;
+        //     grid-template-rows: auto;
+        //     .background{
+        //         order: 1;
+        //     }
+        //     .inputField{
+        //         order: 2;
+        //     }
+        // }
         .background{
             background-color: #000;
             width: 100%;
@@ -102,18 +115,6 @@
     h2{
         color: #fff;
     }
-    .submit{
-        background-color: #1f1f1f;
-        padding: 12px;
-        border-radius: 12px;
-        border: 1px solid rgba(255,255,255, 0.1);
-        color: #fff;
-        font-size: 1rem;
-        font-weight: 700;
-        text-align: center;
-        cursor: pointer;
-        margin-top: 2rem;
-    }
     .plus{
         background-color: #008000;
     }
@@ -130,11 +131,13 @@
 
 .label{
     margin: 8px 0;
-    height: 2rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    input{
+    width: 100%;
+    height: 3rem;
+    border: 1px solid transparent;
+    input[type = checkbox]{
         position: relative;
         -webkit-appearance: none;
         -moz-appearance:none;
@@ -155,5 +158,40 @@
                 align-items: center;
             }
         }
+    }
+    
+    input[type = radio]{
+        position: relative;
+        -webkit-appearance: none;
+        -moz-appearance:none;
+        appearance: none;
+        width: 1.7rem;
+        height: 1.7rem;
+        color: #fff;
+        background-color: #1f1f1f;
+        border-radius: 1rem;
+        &:checked{
+            color: #fff;
+            background-color: #ffffff;
+
+            ~ .label{
+                background-color: rgb(255, 255, 255);
+                border-radius: 8px;
+                border: 1px solid rgba(255, 255, 255, 0.1);
+                color: #000;
+            }
+            // &::after{
+            //     content: url("/check.svg");
+            //     width: 100%;
+            //     height: 100%;
+            //     display: flex;
+            //     justify-content: center;
+            //     align-items: center;
+            // }
+        }
+    }
+    .label{
+        background-color: rgba(255, 255, 255, 0.1);
+        border-radius: 8px;
     }
 }
