@@ -32,13 +32,13 @@ export const metadata = {
   },
   openGraph: {
     title: 'New Mongol Student Union',
-    metadataBase: new URL("https://student.nmit.edu.mn/"),
+    metadataBase: new URL("https://nmit.vercel.app/"),
     description: 'New Mongol Student Union',
-    url: 'https://student.nmit.edu.mn/',
+    url: 'https://nmit.vercel.app/',
     siteName: 'New Mongol Student Union',
     images: [
       {
-        url: 'https://student.nmit.edu.mn/opengraph-image.jpg',
+        url: 'https://nmit.vercel.app/opengraph-image.jpg',
         width: 1200,
         height: 630,
         alt: 'background',
