@@ -102,24 +102,24 @@ const handlePrevSlide = () => {
       _template: "table"
     };
 
-    // try {
-    //   const internalResponse = await fetch('/api/submit-form', {
-    //     method: 'POST',
-    //     headers: {
-    //       'Content-Type': 'application/json',
-    //     },
-    //     body: JSON.stringify(formData),
-    //   });
+    try {
+      const internalResponse = await fetch('/api/submit-form', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
 
-    //   const internalResult = await internalResponse.json();
-    //   if (internalResponse.ok) {
-    //     failed = false;
-    //   } else {
-    //     alert('Failed to submit form to internal API.');
-    //   }
-    // } catch (error) {
-    //   console.error('Error submitting form to internal API:', error);
-    // }
+      const internalResult = await internalResponse.json();
+      if (internalResponse.ok) {
+        failed = false;
+      } else {
+        alert('Failed to submit form to internal API.');
+      }
+    } catch (error) {
+      console.error('Error submitting form to internal API:', error);
+    }
 
     try {
       // await fetch('https://formsubmit.co/87210a15849cb9819b7b5c5f21f75e0e', {
