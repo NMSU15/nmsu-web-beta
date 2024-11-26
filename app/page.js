@@ -317,7 +317,7 @@ const handlePrevSlide = () => {
         <SwiperSlide className={styles.swiperSlide}>
         <div className={styles.dis} style={{gridTemplateColumns: "1fr"}}>
           <div className={styles.inputField}>
-            <label>Шинэ жилийн ticket-ний үнэ 90k байвал авах уу? авахгүй бол үнийн хувьд хэд байвал авах вэ?:</label>
+            <label>Шинэ жилийн ticket-ний үнэ 100k байвал авах уу? авахгүй бол үнийн хувьд хэд байвал авах вэ?:</label>
             <input
               name="Ticket"
               type="text"
