@@ -47,8 +47,8 @@ function AuthWrapper({ children }) {
   }, []);
 
   const openInBrowserLink = isAndroid
-    ? `intent://${currentDomain}/#Intent;scheme=https;package=com.android.chrome;end`
-    : `https://${currentDomain}`;
+    ? `intent://${currentDomain+pathName}/#Intent;scheme=https;package=com.android.chrome;end`
+    : `https://${currentDomain+pathName}`;
 
   useEffect(() => {
     const savedContinueWithoutLogin = sessionStorage.getItem("continueWithoutLogin");
