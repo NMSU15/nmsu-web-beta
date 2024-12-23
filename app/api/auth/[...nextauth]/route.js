@@ -4,7 +4,7 @@ import PocketBase from 'pocketbase';
 
 const pb = new PocketBase(process.env.NEXT_PUBLIC_POCKETBASE_URL);
 
-const handler = NextAuth({
+export const authOptions = {
   providers: [
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID ?? "",
@@ -25,34 +25,34 @@ const handler = NextAuth({
       session.idToken = token.idToken;
       session.userId = token.userId;
 
-        // try {
-        //   const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/pocketbase/user`, {
-        //     method: 'POST',
-        //     headers: {
-        //       'Content-Type': 'application/json',
-        //     },
-        //     body: JSON.stringify({
-        //       user: {
-        //         name: session.user.name,
-        //         email: session.user.email,
-        //         guser_id: session.userId,
-        //         picture: session.user.image,
-        //       },
-        //     }),
-        //   });
-  
-        //   const data = await response.json();
-        //   if (!response.ok) {
-        //     console.error('PocketBase save failed:', data.error);
-        //   }
-        // } catch (error) {
-        //   console.error('Error calling PocketBase API route:', error);
-        // }
-  
+      try {
+        const imageResponse = await fetch(session.user.image);
+        const imageBlob = await imageResponse.blob();
+
+        const formData = new FormData();
+        formData.append('file', new File([imageBlob], `${session.userId}.png`, { type: 'image/png' }));
+        formData.append('name', session.user.name);
+        formData.append('email', session.user.email);
+        formData.append('guser_id', session.userId);
+
+        const response = await fetch(`http://localhost:3030/api/user`, {
+          method: 'POST',
+          body: formData,
+        });
+
+        const data = await response.json();
+        if (!response.ok) {
+          console.error('PocketBase save failed:', data.error);
+        }
+      } catch (error) {
+        console.error('Error calling PocketBase API route:', error);
+      }
+
       return session;
     },
   },
   secret: process.env.NEXTAUTH_SECRET,
-});
+};
 
+const handler = NextAuth(authOptions);
 export { handler as GET, handler as POST };

@@ -1,8 +1,5 @@
 import Image from "next/image"
-
-export const metadata = {
-  title: 'thanks',
-}
+import Link from "next/link"
 
 export default function Page() {
   return (
@@ -10,7 +7,7 @@ export default function Page() {
         <div className="center">
         <div className="centerq">
             <Image
-                src={"./Logo.svg"}
+                src={"/Logo.svg"}
                 width={100}
                 height={100}
                 alt="Logo"
@@ -21,11 +18,11 @@ export default function Page() {
           Бид хүсэлтийг тань хүлээн авсны дараа эргүүлэн имэйлээр холбогдох тул та имэйлээ шалган хүлээн авсаанаа мэдэгдэн бидэнд буцаан хариу бичээрэй. Мөн асуух зүйл байвал бидний social хаягуудаар холбогдоорой.
           </p>
           <p className="textp social">
-            <a href="mailto: student_union@nmit.edu.mn">email: student_union@nmit.edu.mn</a>
+            <Link href="mailto:student_union@nmit.edu.mn">email: student_union@nmit.edu.mn</Link>
             <br/>
-            <a href="https://www.facebook.com/nmit.studentunion/">fb: Nmit StudentUnion</a>
+            <Link href="https://www.facebook.com/nmit.studentunion/">fb: Nmit StudentUnion</Link>
             <br/>
-            <a href="https://www.instagram.com/nmit_student_union/">ig: nmit_student_union</a>
+            <Link href="https://www.instagram.com/nmit_student_union/">ig: nmit_student_union</Link>
           </p>
           </div>
         </div>

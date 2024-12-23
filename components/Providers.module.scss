@@ -7,7 +7,6 @@
     min-height: calc(100svh - 7rem);
     gap: 3rem;
     .card{
-        padding: 1rem;
         .login{
             width: 100%;
             max-width: 20rem;
@@ -38,8 +37,8 @@
                         width: auto;
                     }
                     p{
-                        font-size: 0.9rem;
-                        font-weight: 600;
+                        font-size: 1rem;
+                        font-weight: 500;
                     }
                 }
                 .signwithout{
@@ -55,10 +54,15 @@
                     cursor: pointer;
                     margin-top: 1rem;
                     p{
-                        font-size: 0.9rem;
+                        font-size: 1rem;
                         font-weight: 500;
                     }
                 }
+            }
+            .terms{
+                margin-top: 1rem;
+                width: 100%;
+                text-align: center;
             }
         }
     }

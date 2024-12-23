@@ -4,7 +4,6 @@ import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Providers from "@/components/Providers";
 
-
 const rubik = Rubik({
   subsets: ['latin'],
   display: 'swap',
@@ -15,6 +14,7 @@ export const metadata = {
     template: '%s | NMSU',
     default: 'New Mongol Student Union',
   },
+  themeColor: '#1d1d1d',
   description: "NEW MONGOL STUDENT UNION",
   icons: {
     icon: [
@@ -38,7 +38,7 @@ export const metadata = {
     siteName: 'New Mongol Student Union',
     images: [
       {
-        url: 'https://student.nmit.edu.mn/opengraph-image.png',
+        url: 'https://student.nmit.edu.mn/opengraph-image.jpg',
         width: 1200,
         height: 630,
         alt: 'background',
@@ -50,6 +50,9 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="mn">
+      <head>
+        <meta name="theme-color" content="#000000" />
+      </head>
       <body className={rubik.className}>
         <Providers>
         <Navbar/>

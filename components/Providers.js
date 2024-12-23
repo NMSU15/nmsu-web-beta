@@ -1,4 +1,4 @@
-'use client'
+'use client';
 import { signIn, useSession, SessionProvider } from "next-auth/react";
 import React, { useState, useEffect } from "react";
 import styles from "./Providers.module.scss";
@@ -19,35 +19,35 @@ function AuthWrapper({ children }) {
   const { data: session, status } = useSession();
   const [continueWithoutLogin, setContinueWithoutLogin] = useState(false);
   const [isEmbeddedBrowser, setIsEmbeddedBrowser] = useState(false);
+  const [currentDomain, setCurrentDomain] = useState('');
+  const [isAndroid, setIsAndroid] = useState(false);
 
-  const userAgent = navigator.userAgent || navigator.vendor || window.opera;
-  const isAndroid = /android/i.test(userAgent);
-  const isIOS = /iPad|iPhone|iPod/.test(userAgent) && !window.MSStream;
-  
-  // Dynamically get the current domain
-  const currentDomain = window.location.hostname; // e.g., 'student.nmit.edu.mn'
-  
-  const openInBrowserLink = isAndroid
-    ? `intent://${currentDomain}/#Intent;scheme=https;package=com.android.chrome;end`
-    : `https://${currentDomain}`; // This will open in Safari on iOS
-  // On component mount, check if in an embedded browser
   useEffect(() => {
+    setCurrentDomain(window.location.hostname);
+
     const userAgent = navigator.userAgent || navigator.vendor || window.opera;
-    
-    // Check for common embedded browsers (e.g., Facebook, Instagram, Messenger)
+    const androidCheck = /android/i.test(userAgent);
+    const iosCheck = /iPad|iPhone|iPod/.test(userAgent) && !window.MSStream;
+
+    setIsAndroid(androidCheck);
+    const isIOS = iosCheck;
+
     if (
-      userAgent.includes('FBAN') || // Facebook app
-      userAgent.includes('FBAV') || // Facebook app
-      userAgent.includes('Instagram') || // Instagram app
-      userAgent.includes('Line') || // LINE app
-      userAgent.includes('Messenger') || // Messenger app
-      userAgent.includes('TikTok') // TikTok app
+      userAgent.includes('FBAN') || 
+      userAgent.includes('FBAV') || 
+      userAgent.includes('Instagram') || 
+      userAgent.includes('Line') || 
+      userAgent.includes('Messenger') || 
+      userAgent.includes('TikTok')
     ) {
       setIsEmbeddedBrowser(true);
     }
   }, []);
 
-  // On component mount, check sessionStorage for the saved continueWithoutLogin state
+  const openInBrowserLink = isAndroid
+    ? `intent://${currentDomain}/#Intent;scheme=https;package=com.android.chrome;end`
+    : `https://${currentDomain}`;
+
   useEffect(() => {
     const savedContinueWithoutLogin = sessionStorage.getItem("continueWithoutLogin");
     if (savedContinueWithoutLogin === "true") {
@@ -55,7 +55,6 @@ function AuthWrapper({ children }) {
     }
   }, []);
 
-  // Save "Continue without login" state to sessionStorage when it changes
   useEffect(() => {
     sessionStorage.setItem("continueWithoutLogin", continueWithoutLogin);
   }, [continueWithoutLogin]);
@@ -63,11 +62,7 @@ function AuthWrapper({ children }) {
   if (status === "loading") {
     return (
       <main className={styles.main}>
-        <Image
-          src={'/Logo.svg'}
-          width={120}
-          height={120}
-        />
+        <Image src={'/Logo.svg'} width={120} height={120} />
       </main>
     );
   }
@@ -78,16 +73,10 @@ function AuthWrapper({ children }) {
 
   return (
     <main className={styles.main}>
-      <Image
-        src={"/Logo.svg"}
-        width={100}
-        height={100}
-      />
+      <Image src={"/Logo.svg"} width={100} height={100} />
       <section className={styles.card}>
         <div className={styles.login}>
-          <h3>
-            {isEmbeddedBrowser ? "Өөр browser ашиглана уу!" : "Login"}
-          </h3>    
+          <h3>{isEmbeddedBrowser ? "Өөр browser ашиглана уу!" : "Login"}</h3>    
           <p className={styles.desc}>
             {isEmbeddedBrowser 
               ? "Энэ аппликешн нь Google account дэмждэггүй тул үргэлжлүүлэхийн тулд энэ хуудсыг үндсэн хөтөч дээрээ нээнэ үү." 
@@ -95,38 +84,37 @@ function AuthWrapper({ children }) {
           </p>
 
           {!isEmbeddedBrowser ? (
-            <>
-              <button onClick={() => signIn("google")} className={styles.btn}>
-                <div className={styles.signin}>
-                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none" role="img" className="icon ">
-                    <path fillRule="evenodd" clipRule="evenodd" d="M17.64 9.20419C17.64 8.56601 17.5827 7.95237 17.4764 7.36328H9V10.8446H13.8436C13.635 11.9696 13.0009 12.9228 12.0477 13.561V15.8192H14.9564C16.6582 14.2524 17.64 11.9451 17.64 9.20419Z" fill="#4285F4"></path>
-                    <path fillRule="evenodd" clipRule="evenodd" d="M8.99976 18C11.4298 18 13.467 17.1941 14.9561 15.8195L12.0475 13.5613C11.2416 14.1013 10.2107 14.4204 8.99976 14.4204C6.65567 14.4204 4.67158 12.8372 3.96385 10.71H0.957031V13.0418C2.43794 15.9831 5.48158 18 8.99976 18Z" fill="#34A853"></path>
-                    <path fillRule="evenodd" clipRule="evenodd" d="M3.96409 10.7098C3.78409 10.1698 3.68182 9.59301 3.68182 8.99983C3.68182 8.40664 3.78409 7.82983 3.96409 7.28983V4.95801H0.957273C0.347727 6.17301 0 7.54755 0 8.99983C0 10.4521 0.347727 11.8266 0.957273 13.0416L3.96409 10.7098Z" fill="#FBBC05"></path>
-                    <path fillRule="evenodd" clipRule="evenodd" d="M8.99976 3.57955C10.3211 3.57955 11.5075 4.03364 12.4402 4.92545L15.0216 2.34409C13.4629 0.891818 11.4257 0 8.99976 0C5.48158 0 2.43794 2.01682 0.957031 4.95818L3.96385 7.29C4.67158 5.16273 6.65567 3.57955 8.99976 3.57955Z" fill="#EA4335"></path>
-                  </svg>
-                  <p>
-                    Sign in with nmit.edu.mn
-                  </p>
-                </div>
-              </button>
-            </>
-          ):(
-          <Link href={openInBrowserLink} className={styles.btn}>
-            <div className={styles.signwithout}>
-              <p>
-                Open in {isAndroid ? "Chrome" : "Safari"}
-              </p>
-            </div>
-          </Link>
+            <button onClick={() => signIn("google")} className={styles.btn}>
+              <div className={styles.signin}>
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none" role="img" class="icon ">
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M17.64 9.20419C17.64 8.56601 17.5827 7.95237 17.4764 7.36328H9V10.8446H13.8436C13.635 11.9696 13.0009 12.9228 12.0477 13.561V15.8192H14.9564C16.6582 14.2524 17.64 11.9451 17.64 9.20419Z" fill="#4285F4"></path>
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M8.99976 18C11.4298 18 13.467 17.1941 14.9561 15.8195L12.0475 13.5613C11.2416 14.1013 10.2107 14.4204 8.99976 14.4204C6.65567 14.4204 4.67158 12.8372 3.96385 10.71H0.957031V13.0418C2.43794 15.9831 5.48158 18 8.99976 18Z" fill="#34A853"></path>
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M3.96409 10.7098C3.78409 10.1698 3.68182 9.59301 3.68182 8.99983C3.68182 8.40664 3.78409 7.82983 3.96409 7.28983V4.95801H0.957273C0.347727 6.17301 0 7.54755 0 8.99983C0 10.4521 0.347727 11.8266 0.957273 13.0416L3.96409 10.7098Z" fill="#FBBC05"></path>
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M8.99976 3.57955C10.3211 3.57955 11.5075 4.03364 12.4402 4.92545L15.0216 2.34409C13.4629 0.891818 11.4257 0 8.99976 0C5.48158 0 2.43794 2.01682 0.957031 4.95818L3.96385 7.29C4.67158 5.16273 6.65567 3.57955 8.99976 3.57955Z" fill="#EA4335"></path>
+              </svg>
+                <p>Sign in with Googles</p>
+              </div>
+            </button>
+          ) : (
+            <Link href={openInBrowserLink} className={styles.btn}>
+              <div className={styles.signwithout}>
+                <p>Open in {isAndroid ? "Chrome" : "Safari"}</p>
+              </div>
+            </Link>
           )}
 
-          <button onClick={() => setContinueWithoutLogin(true)} className={styles.btn}>
+          {/* <button onClick={() => setContinueWithoutLogin(true)} className={styles.btn}>
             <div className={styles.signwithout}>
-              <p>
-                Continue without login
-              </p>
+              <p>Continue without login</p>
             </div>
-          </button>
+          </button> */}
+          <p className={styles.terms}>
+            <Link
+              href="./terms-of-use"
+            >
+              terms of use
+            </Link>
+          </p>
         </div>
       </section>
     </main>

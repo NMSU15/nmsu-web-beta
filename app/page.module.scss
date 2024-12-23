@@ -1,159 +1,110 @@
-.main{
-    height: calc(100vh - 2rem);
-}
-
-.form{
-    max-width: 75rem;
-    min-height: calc(100vh - 7rem);
+.clublist{
+    max-width: 1200px;
     margin: auto;
-    .swiper{
-        height: calc(100vh - 7rem);
-        width: auto;
-        .swiperSlide{
-            width: auto;
-            height: 100%;
-            .navigationButtons{
-                display: flex;
-                gap: 1rem;
-                .navButton{
-                    margin-top: 1rem;
-                    font-size: 1rem;
-                    padding: 1rem 1.5rem;
-                    background-color: #fff;
-                    color: #000;
-                    border-radius: 12px;
-                    cursor: pointer;
-                    &:disabled{
-                        background-color: #1f1f1f;
-                        color: #ccc;
-                        cursor: not-allowed;
-                    }
-                }
-            }
-        }
-    }
-    .dis{
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        border: 1px solid rgba(255,255,255, 0.1);
-        background-color: #0f0f0f;
-        border-radius: 8px;
-        min-height: calc(100vh - 7rem);
-        overflow: hidden;
-        place-items: center;
-        @media (max-width: 640px) {
-            grid-template-columns: 1fr;
-            grid-template-rows: auto;
-            .background{
-                order: 1;
-            }
-            .inputField{
-                order: 2;
-            }
-        }
-        .background{
-            background-color: #000;
-            width: 100%;
-            height: 100%;
-            background-position: center;
-            background-size: cover;
-            object-fit: cover;
-            background-repeat: no-repeat;
-        }
-        .inputField{
-            display: flex;
-            justify-content: center;
-            flex-direction: column;
-            padding: 2rem;
-            width: 100%;
-            height: 100%;
-            max-width: 50rem;
-            label{
-                padding-left: 8px;
-                font-size: 1.5rem;
-                font-weight: 600;
-            }
-            .checkboxGroup{
-                label{
-                    font-size: 1rem;
-                    font-weight: 500;
-                }
-            }
-        }
-    }
-    input, textarea, .input{
-        height: 2.5rem;
-        width: 100%;
-        background-color: #1f1f1f;
-        outline: none;
-        padding: 8px;
-        margin-top: 1.5rem;
-        color: #fff;
-        border-radius: 8px;
-        border: 1px solid rgba(255,255,255, 0.1);
-        font-family: "rubik" sans-serif;
-    }
-    textarea{
-        height: 6rem;
-        resize: vertical;
-        font-family: inherit;
-        font-size: inherit;
-    }
-    h2{
-        color: #fff;
-    }
-    .submit{
-        background-color: #1f1f1f;
-        padding: 12px;
-        border-radius: 12px;
-        border: 1px solid rgba(255,255,255, 0.1);
-        color: #fff;
-        font-size: 1rem;
-        font-weight: 700;
-        text-align: center;
-        cursor: pointer;
-        margin-top: 2rem;
-    }
-    .plus{
-        background-color: #008000;
-    }
-    p{
-        word-wrap: break-word;
-    }
-    .question{
-        width: 100%;
-        label{
-            width: 100%;
-        }
-    }
-}
-
-.label{
-    margin: 8px 0;
-    height: 2rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    input{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 1rem;
+    .club{
         position: relative;
-        -webkit-appearance: none;
-        -moz-appearance:none;
-        appearance: none;
-        width: 1.7rem;
-        height: 1.7rem;
-        color: #fff;
-        background-color: #1f1f1f;
-        &:checked{
-            color: #fff;
-            background-color: #ffffff;
-            &::after{
-                content: url("/check.svg");
-                width: 100%;
-                height: 100%;
+        width: 100%;
+        aspect-ratio: 7/3;
+        height: auto;
+        min-height: 100px;
+        background-color: #2f2f2f;
+        object-fit: cover;
+        background-size: cover;
+        background-position: center;
+        border-radius: 1.5rem;
+        .inner{
+            border: 1px solid #2f2f2f;
+            padding: 1rem 3rem 1rem 1rem;
+            border-radius: 23px;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            .title{
+                font-size: 1.2rem;
+                font-weight: 600;
+                // word-break: break-all;
+                // text-wrap: wrap;
+            }
+            .desc{
+                font-size: 14px;
+                font-weight: 400;
+            }
+            .pop{
+                position: absolute;
+                top: 0;
+                right: 0;
+                width: 3rem;
+                height: 3rem;
+                border-radius: 0px 0px 0px 30px;
+                box-shadow: 8px -8px 0px 0px #000;
+                background-color: #000;
                 display: flex;
                 justify-content: center;
                 align-items: center;
+                border-bottom: 1px solid #2f2f2f;
+                border-left: 1px solid #2f2f2f;
+                &::before{
+                    content: "";
+                    position: absolute;
+                    left: -21px;
+                    top: 0px;
+                    width: 20px;
+                    height: 20px;
+                    border-radius: 0px 20px 0px 0px;
+                    background: transparent;
+                    box-shadow: 6px -6px 0px 6px #000;
+                    border-right: 1px solid #2f2f2f;
+                    border-top: 1px solid #2f2f2f;
+                }
+                &::after{
+                    content: "";
+                    position: absolute;
+                    right: 0px;
+                    top: 47px;
+                    width: 20px;
+                    height: 20px;
+                    border-radius: 0px 20px 0px 0px;
+                    background: transparent;
+                    box-shadow: 6px -6px 0px 6px #000;
+                    border-right: 1px solid #2f2f2f;
+                    border-top: 1px solid #2f2f2f;
+                }
+            }
+            
+            .proImg{
+                top: 0;
+                right: 0;
+                position: absolute;
+                z-index: 100;
+                width: 2.5rem;
+                height: 2.5rem;
+                border-radius: 1.5rem;
+                background-color: #000;
+            }
+            .members{
+                position: absolute;
+                bottom: 1rem;
+                left: 1rem;
+                display: flex;
+                .memberImg{
+                    border-radius: 1rem;
+                }
             }
         }
+    }
+}
+
+@media (max-width: 1200px) {
+    .clublist{
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+    .clublist{
+        grid-template-columns: 1fr;
     }
 }

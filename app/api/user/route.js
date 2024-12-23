@@ -3,8 +3,11 @@ import { NextResponse } from 'next/server';
 
 export async function POST(req) {
   try {
-    const body = await req.json();
-    const { user } = body;
+    const formData = await req.formData(); 
+    const imageFile = formData.get('file'); 
+    const name = formData.get('name');
+    const email = formData.get('email');
+    const guser_id = formData.get('guser_id');
 
     const pb = new PocketBase(process.env.NEXT_PUBLIC_POCKETBASE_URL);
 
@@ -12,10 +15,10 @@ export async function POST(req) {
 
     let existingUser;
     try {
-      existingUser = await pb.collection('accounts').getFirstListItem(`guser_id="${user.guser_id}"`);
+      existingUser = await pb.collection('accounts').getFirstListItem(`guser_id="${guser_id}"`);
     } catch (error) {
       if (error.status === 404) {
-        console.log(`User with guser_id ${user.guser_id} not found. A new user will be created.`);
+        console.log(`User with guser_id ${guser_id} not found. A new user will be created.`);
       } else {
         console.error('Error fetching user from PocketBase:', error);
         return NextResponse.json({ error: 'PocketBase user fetch failed' }, { status: 500 });
@@ -23,17 +26,27 @@ export async function POST(req) {
     }
 
     const userData = {
-      username: user.name || 'Unnamed',
-      email: user.email,
-      guser_id: user.guser_id,
+      username: name || null,
+      email: email || null,
+      guser_id: guser_id || null,
       lastlogin: new Date().toISOString(),
-      profileImage: user.picture || '',
     };
 
+    let userId;
     if (existingUser) {
       await pb.collection('accounts').update(existingUser.id, userData);
+      userId = existingUser.id;
     } else {
-      await pb.collection('accounts').create(userData);
+      const newUser = await pb.collection('accounts').create(userData);
+      userId = newUser.id;
+    }
+
+    if (imageFile) {
+      const fileData = new FormData();
+      fileData.append('image', imageFile, imageFile.name); // Include the file name for identification
+
+      // Upload the image to the account collection
+      await pb.collection('accounts').update(userId, fileData);
     }
 
     return NextResponse.json({ success: true });
