@@ -73,7 +73,7 @@ export function Mail() {
             <Section style={{padding: "0 20px 20px 20px"}}>
             <Hr style={{ border: "1px solid #eaeaea", margin: "0 0 20px 0", width: "100%" }} />
             <Text style={{ color: "#666666", fontSize: "14px", lineHeight: "24px", textAlign: "center" }}>
-              @NEW MONGOL STUDENT 
+              @NEW MONGOL STUDENT UNION
             </Text>
             </Section>
           </Container>
