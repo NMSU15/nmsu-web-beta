@@ -25,28 +25,28 @@ export const authOptions = {
       session.idToken = token.idToken;
       session.userId = token.userId;
 
-      try {
-        const imageResponse = await fetch(session.user.image);
-        const imageBlob = await imageResponse.blob();
+      // try {
+      //   const imageResponse = await fetch(session.user.image);
+      //   const imageBlob = await imageResponse.blob();
 
-        const formData = new FormData();
-        formData.append('file', new File([imageBlob], `${session.userId}.png`, { type: 'image/png' }));
-        formData.append('name', session.user.name);
-        formData.append('email', session.user.email);
-        formData.append('guser_id', session.userId);
+      //   const formData = new FormData();
+      //   formData.append('file', new File([imageBlob], `${session.userId}.png`, { type: 'image/png' }));
+      //   formData.append('name', session.user.name);
+      //   formData.append('email', session.user.email);
+      //   formData.append('guser_id', session.userId);
 
-        const response = await fetch(`http://localhost:3030/api/user`, {
-          method: 'POST',
-          body: formData,
-        });
+      //   const response = await fetch(`http://localhost:3030/api/user`, {
+      //     method: 'POST',
+      //     body: formData,
+      //   });
 
-        const data = await response.json();
-        if (!response.ok) {
-          console.error('PocketBase save failed:', data.error);
-        }
-      } catch (error) {
-        console.error('Error calling PocketBase API route:', error);
-      }
+      //   const data = await response.json();
+      //   if (!response.ok) {
+      //     console.error('PocketBase save failed:', data.error);
+      //   }
+      // } catch (error) {
+      //   console.error('Error calling PocketBase API route:', error);
+      // }
 
       return session;
     },

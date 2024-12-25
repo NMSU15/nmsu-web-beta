@@ -41,7 +41,7 @@ export default function Navbar() {
                 <div className={styles.top}>
                     <div className={styles.cont}>
                         <section className={styles.navbar}>
-                            <button className={styles.bar} onClick={toggleMenu}>
+                            {/* <button className={styles.bar} onClick={toggleMenu}>
                                 {!showMenu ? (
                                     <svg className={styles.svg} width="24" height="18" viewBox="0 0 24 18" xmlns="http://www.w3.org/2000/svg">
                                         <g clipPath="url(#clip0_59_119)">
@@ -61,7 +61,7 @@ export default function Navbar() {
                                         <path d="M18.0312 15.9558L3.18197 1.10659C2.59618 0.520806 1.64643 0.520806 1.06065 1.10659C0.474865 1.69237 0.474864 2.64213 1.06065 3.22791L15.9099 18.0772C16.4957 18.6629 17.4454 18.6629 18.0312 18.0772C18.617 17.4914 18.617 16.5416 18.0312 15.9558Z" fill="white"/>
                                     </svg>
                                 )}
-                            </button>
+                            </button> */}
                             <Link href={'/'} className={styles.logo}>
                                 <Image
                                     src={'/Logo.svg'}
@@ -122,14 +122,14 @@ function ProfileModal({session}) {
     return (
         <section className={`${styles.modal} ${styles.proModal}`}>
             <ul>
-                <li>
+                {/* <li>
                     <Link href={'/myclubs'} className={styles.link}>
                         <h3>
                             My Clubs
                         </h3>
                     </Link>
                 </li>
-                <div className={styles.br}></div>
+                <div className={styles.br}></div> */}
                 {!session?(
                     <li>
                         <button onClick={()=>{signIn("google")}} className={`${styles.link} ${styles.login}`}>
